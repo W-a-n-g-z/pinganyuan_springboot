@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enss.ipfsgate.mapper.ContractMapper">
+
+    <insert id="insertContract" useGeneratedKeys="true" parameterType="com.enss.ipfsgate.model.config.Contract">
+        insert into config_contract_info
+            (contract_type, contract_name,contract_address)
+        values (
+            #{contractType},  #{contractName,jdbcType=VARCHAR}, #{contractAddress,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="selectContractAddress" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select contract_address from config_contract_info where contract_type=#{contractType} ORDER BY id DESC LIMIT 0,1
+    </select>
+
+
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enss.ipfsgate.mapper.RepoMapper">
+
+    <resultMap id="baseResultMap" type="com.enss.ipfsgate.model.RepoInfo">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="repo_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
+    <resultMap id="repoResultMap" type="java.util.Map">
+        <result column="u_id" property="uId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="u_name" property="uName" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </resultMap>
+<!--
+    <resultMap id="userResultMap" type="com.enss.ipfsgate.model.RepoInfo">
+        <id property="id" column="user_id"/>
+        <result property="rName" column="username"/>
+        <result property="rUser" column="email"/>
+    </resultMap>-->
+
+    <!-- 查询 -->
+    <select id="search" parameterType="com.enss.ipfsgate.model.RepoInfo" resultMap="repoResultMap">
+        SELECT id, repo_name, user_id
+        FROM repo
+        WHERE repo_name = #{rName,jdbcType=VARCHAR}
+    </select>
+    <!-- 查询所有用户 -->
+    <select id="selectAll" resultMap="repoResultMap">
+        select
+            id, repo_name, user_id
+        from repo
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="rId" parameterType="com.enss.ipfsgate.model.RepoInfo">
+        insert into repo (repo_name, user_id)
+        values (#{rName,jdbcType=VARCHAR}, #{rUser,jdbcType=VARCHAR})
+    </insert>
+</mapper>

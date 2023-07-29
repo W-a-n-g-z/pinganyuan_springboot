@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enss.ipfsgate.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.enss.ipfsgate.model.UserInfo">
+        <constructor>
+            <idArg column="u_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="u_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="u_password" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="u_state" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="u_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="u_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="u_create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="u_last_login" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="u_contract_address" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="u_from_address" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="u_from_passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
+    <resultMap id="SearchResultMap" type="java.util.Map">
+        <result column="u_id" property="uId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="u_name" property="uName" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        u_id, u_name, u_password, u_state, u_type, u_phone, u_create_time, u_last_login, u_contract_address, u_from_address, u_from_passwd
+    </sql>
+
+    <!-- 登录 -->
+    <select id="selectLogin" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM `userinfo`
+        WHERE (`u_name`=#{username} OR `u_phone`=#{username}) AND `u_password`=#{password} AND `u_state` = 1
+    </select>
+
+    <!-- 查询所有用户 -->
+    <select id="selectAllUsers" resultMap="SearchResultMap">
+        select
+            id, user_name, user_phone, user_password
+        from user
+    </select>
+    <!-- 登陆 -->
+    <select id="Login" parameterType="com.enss.ipfsgate.model.UserInfo" resultType="int">
+        SELECT COUNT(*) FROM user
+        WHERE user_name = #{uName,jdbcType=VARCHAR} AND user_password = #{uPassword,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uId" parameterType="com.enss.ipfsgate.model.UserInfo">
+        insert into user (user_name, user_phone, user_password)
+        values (#{uName,jdbcType=VARCHAR}, #{uPhone,jdbcType=VARCHAR}, #{uPassword,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from userinfo
+        where u_id = #{uId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from userinfo
+        where u_id = #{uId,jdbcType=INTEGER}
+    </delete>
+
+
+
+    <insert id="insertSelective" parameterType="com.enss.ipfsgate.model.UserInfo">
+        insert into userinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uId != null">
+                u_id,
+            </if>
+            <if test="uName != null">
+                u_name,
+            </if>
+            <if test="uPassword != null">
+                u_password,
+            </if>
+            <if test="uState != null">
+                u_state,
+            </if>
+            <if test="uType != null">
+                u_type,
+            </if>
+            <if test="uPhone != null">
+                u_phone,
+            </if>
+            <if test="uCreateTime != null">
+                u_create_time,
+            </if>
+            <if test="uLastLogin != null">
+                u_last_login,
+            </if>
+            <if test="uContractAddress != null">
+                u_contract_address,
+            </if>
+            <if test="uFromAddress != null">
+                u_from_address,
+            </if>
+            <if test="uFromPasswd != null">
+                u_from_passwd,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uId != null">
+                #{uId,jdbcType=INTEGER},
+            </if>
+            <if test="uName != null">
+                #{uName,jdbcType=VARCHAR},
+            </if>
+            <if test="uPassword != null">
+                #{uPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="uState != null">
+                #{uState,jdbcType=INTEGER},
+            </if>
+            <if test="uType != null">
+                #{uType,jdbcType=INTEGER},
+            </if>
+            <if test="uPhone != null">
+                #{uPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="uCreateTime != null">
+                #{uCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="uLastLogin != null">
+                #{uLastLogin,jdbcType=TIMESTAMP},
+            </if>
+            <if test="uContractAddress != null">
+                #{uContractAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="uFromAddress != null">
+                #{uFromAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="uFromPasswd != null">
+                #{uFromPasswd,jdbcType=VARCHAR},
+            </if>
+
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.enss.ipfsgate.model.UserInfo">
+        update userinfo
+        <set>
+            <if test="uName != null">
+                u_name = #{uName,jdbcType=VARCHAR},
+            </if>
+            <if test="uPassword != null">
+                u_password = #{uPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="uState != null">
+                u_state = #{uState,jdbcType=INTEGER},
+            </if>
+            <if test="uType != null">
+                u_type = #{uType,jdbcType=INTEGER},
+            </if>
+            <if test="uPhone != null">
+                u_phone = #{uPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="uCreateTime != null">
+                u_create_time = #{uCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="uLastLogin != null">
+                u_last_login = #{uLastLogin,jdbcType=TIMESTAMP},
+            </if>
+            <if test="uContractAddress != null">
+                u_contract_address = #{uContractAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="uFromAddress != null">
+                u_from_address = #{uFromAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="uFromPasswd != null">
+                u_from_passwd = #{uFromPasswd,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where u_id = #{uId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.enss.ipfsgate.model.UserInfo">
+        update userinfo
+        set u_name = #{uName,jdbcType=VARCHAR},
+            u_password = #{uPassword,jdbcType=VARCHAR},
+            u_state = #{uState,jdbcType=INTEGER},
+            u_type = #{uType,jdbcType=INTEGER},
+            u_phone = #{uPhone,jdbcType=VARCHAR},
+            u_create_time = #{uCreateTime,jdbcType=TIMESTAMP},
+            u_last_login = #{uLastLogin,jdbcType=TIMESTAMP},
+            u_contract_address = #{uContractAddress,jdbcType=VARCHAR},
+            u_from_address = #{uFromAddress,jdbcType=VARCHAR},
+            u_from_passwd = #{uFromPasswd,jdbcType=VARCHAR}
+        where u_id = #{uId,jdbcType=INTEGER}
+    </update>
+</mapper>
