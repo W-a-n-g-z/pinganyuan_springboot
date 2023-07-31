@@ -15,5 +15,4 @@ public interface RepoMapper {
     //新建
     int insert(RepoInfo record);
 
-
 }

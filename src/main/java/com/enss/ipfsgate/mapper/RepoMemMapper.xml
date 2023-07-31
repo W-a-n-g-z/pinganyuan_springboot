@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enss.ipfsgate.mapper.RepoMemMapper">
+
+    <resultMap id="baseResultMap" type="com.enss.ipfsgate.model.RepoInfo">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+            <arg column="repo_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="member_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="member_state" javaType="java.lang.Integer" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
+    <resultMap id="repoResultMap" type="java.util.Map">
+        <result column="u_id" property="uId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="u_name" property="uName" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </resultMap>
+    <!--
+        <resultMap id="userResultMap" type="com.enss.ipfsgate.model.RepoInfo">
+            <id property="id" column="user_id"/>
+            <result property="rName" column="username"/>
+            <result property="rUser" column="email"/>
+        </resultMap>-->
+
+    <!-- 删除 -->
+    <select id="deleteMember" parameterType="String" resultMap="repoResultMap">
+        update repo_member
+        SET member_state = 0
+        WHERE member_name = #{member_name}
+    </select>
+    <!-- 查询所有用户 -->
+    <select id="selectAllMember" resultMap="repoResultMap">
+        select
+            id, repo_name, member_name, member_state
+        from repo_member
+    </select>
+    <insert id="addMember" parameterType="String">
+        insert into repo_member (repo_name, member_name, member_state )
+        values (#{repo_name}, #{member_name},1)
+    </insert>
+</mapper>

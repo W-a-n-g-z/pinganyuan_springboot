@@ -17,7 +17,7 @@ public class RepoController {
 
     @RequestMapping("/newrepo")
     public int newRepo(){
-        RepoInfo repoInfo = new RepoInfo("test","1");
+        RepoInfo repoInfo = new RepoInfo("test","twf");
         return repoService.newRepo(repoInfo);
     }
 
