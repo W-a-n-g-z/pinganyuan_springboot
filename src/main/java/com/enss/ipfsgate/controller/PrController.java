@@ -15,8 +15,9 @@ public class PrController {
     private PrService prService;
 
     @RequestMapping("/newpr")
-    public int newRepo(){
-        PrInfo prInfo = new PrInfo("twf","test","无","未通过","无");
+    public int newRepo(String repo_name){
+//        PrInfo prInfo = new PrInfo("twf","test_1","无","未通过","无");
+        PrInfo prInfo = new PrInfo("twf",repo_name,"无","未通过","无");
         return prService.newPr(prInfo);
     }
     @RequestMapping("/search")

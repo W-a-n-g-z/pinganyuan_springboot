@@ -15,4 +15,7 @@ public interface RepoMapper {
     //新建
     int insert(RepoInfo record);
 
+    //活跃仓库
+    List<Map<String,Object>> activeRepo();
+
 }

@@ -16,4 +16,7 @@ public interface RepoService {
 
     //查询所有用户
     List<Map<String,Object>> selectAll();
+
+    //活跃仓库
+    List<Map<String,Object>> activeRepo();
 }

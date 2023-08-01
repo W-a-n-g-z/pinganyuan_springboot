@@ -17,7 +17,7 @@ public class RepoController {
 
     @RequestMapping("/newrepo")
     public int newRepo(){
-        RepoInfo repoInfo = new RepoInfo("test","twf");
+        RepoInfo repoInfo = new RepoInfo("test","twf","ceshi","java");
         return repoService.newRepo(repoInfo);
     }
 
@@ -29,5 +29,10 @@ public class RepoController {
     @RequestMapping("/findall")
     public List<Map<String,Object>> fingall(){
         return repoService.selectAll();
+    }
+
+    @RequestMapping("/activerepo")
+    public List<Map<String,Object>> active(){
+        return repoService.activeRepo();
     }
 }

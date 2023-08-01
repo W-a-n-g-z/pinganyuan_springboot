@@ -32,4 +32,9 @@ public class RepoServiceImpl implements RepoService {
     public List<Map<String,Object>> selectAll(){
         return repoMapper.selectAll();
     }
+
+    @Override
+    public List<Map<String, Object>> activeRepo() {
+        return repoMapper.activeRepo();
+    }
 }

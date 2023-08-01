@@ -22,19 +22,32 @@
 
     <!-- 查询 -->
     <select id="search" parameterType="com.enss.ipfsgate.model.RepoInfo" resultMap="repoResultMap">
-        SELECT id, repo_name, user_id
+        SELECT *
         FROM repo
         WHERE repo_name = #{rName,jdbcType=VARCHAR}
     </select>
-    <!-- 查询所有用户 -->
+    <!-- 查询所有仓库 -->
     <select id="selectAll" resultMap="repoResultMap">
-        select
-            id, repo_name, user_id
+        select *
         from repo
     </select>
-
+    <!-- 查询活跃仓库 -->
+    <select id="activeRepo" resultMap="repoResultMap">
+        SELECT *
+        FROM repo
+        WHERE repo_name IN (
+            SELECT name
+            FROM (
+                     SELECT repo_name AS name, COUNT(*) AS count
+                     FROM apply
+                     GROUP BY repo_name
+                     ORDER BY count DESC LIMIT 2
+            ) AS subquery
+        )
+    </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="rId" parameterType="com.enss.ipfsgate.model.RepoInfo">
-        insert into repo (repo_name, user_id)
-        values (#{rName,jdbcType=VARCHAR}, #{rUser,jdbcType=VARCHAR})
+        insert into repo (repo_name, user_id, repo_lable, repo_language)
+        values (#{rName,jdbcType=VARCHAR}, #{rUser,jdbcType=VARCHAR},
+                #{repo_lable,jdbcType=VARCHAR}, #{repo_lauguage,jdbcType=VARCHAR})
     </insert>
 </mapper>
