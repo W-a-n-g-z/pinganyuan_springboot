@@ -141,8 +141,6 @@ public class AppConfigSchedule {
                 if(allLogInfoSaveSuccess){
                     oldDirDir.delete();
                 }
-            }else{
-                logger.info(oldDirDir.getName()+"无文件生成!");
             }
 
         }
