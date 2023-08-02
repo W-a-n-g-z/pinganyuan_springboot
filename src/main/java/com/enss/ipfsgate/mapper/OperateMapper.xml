@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enss.ipfsgate.mapper.OperateMapper">
+    <resultMap id="OpResultMap" type="java.util.Map">
+        <result column="u_id" property="uId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="u_name" property="uName" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </resultMap>
+    <insert id="insert" parameterType="String">
+        insert into operation (repo_name, member_name, operate)
+        values (#{repo_name,jdbcType=VARCHAR}, #{member_name,jdbcType=VARCHAR},
+                #{operate,jdbcType=VARCHAR})
+    </insert>
+    <select id="search" parameterType="String" resultMap="OpResultMap">
+        SELECT *
+        FROM operation
+        WHERE repo_name = #{repo_name,jdbcType=VARCHAR}
+        ORDER BY id DESC LIMIT 10
+    </select>
+</mapper>

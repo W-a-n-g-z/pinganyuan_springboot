@@ -27,7 +27,7 @@ public class UserController {
 
     @RequestMapping("/register")
     public int register(){
-        UserInfo userInfo = new UserInfo("xxx","12119","123456789");
+        UserInfo userInfo = new UserInfo("xxx","12119","123456789", "111@qq.com");
         return userService.regUser(userInfo);
     }
 

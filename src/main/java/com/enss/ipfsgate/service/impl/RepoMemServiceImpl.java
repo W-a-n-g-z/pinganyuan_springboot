@@ -17,12 +17,27 @@ public class RepoMemServiceImpl implements RepoMemService {
         return repoMemMapper.selectAllMember();
     }
 
+    @Override
+    public List<Map<String, Object>> selectRepoMember(String repo_name) {
+        return repoMemMapper.selectRepoMember(repo_name);
+    }
+
     public void addMember(String repo_name, String member_name){
         repoMemMapper.addMember(repo_name,member_name);
     }
 
     @Override
-    public void deleteMember(String member_name){
-        repoMemMapper.deleteMember(member_name);
+    public void deleteMember(String repo_name,String member_name){
+        repoMemMapper.deleteMember(repo_name,member_name);
+    }
+
+    @Override
+    public void deleteManager(String repo_name, String member_name) {
+        repoMemMapper.deleteManager(repo_name,member_name);
+    }
+
+    @Override
+    public void addManager(String repo_name, String member_name) {
+        repoMemMapper.addManager(repo_name,member_name);
     }
 }

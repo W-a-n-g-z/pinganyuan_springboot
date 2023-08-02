@@ -34,8 +34,7 @@
 
     <!-- 查询所有用户 -->
     <select id="selectAllUsers" resultMap="SearchResultMap">
-        select
-            id, user_name, user_phone, user_password
+        select *
         from user
     </select>
     <!-- 登陆 -->
@@ -45,8 +44,9 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="uId" parameterType="com.enss.ipfsgate.model.UserInfo">
-        insert into user (user_name, user_phone, user_password)
-        values (#{uName,jdbcType=VARCHAR}, #{uPhone,jdbcType=VARCHAR}, #{uPassword,jdbcType=VARCHAR})
+        insert into user (user_name, user_phone, user_password, user_email)
+        values (#{uName,jdbcType=VARCHAR}, #{uPhone,jdbcType=VARCHAR},
+                #{uPassword,jdbcType=VARCHAR}, #{uEmail,jdbcType=VARCHAR})
     </insert>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

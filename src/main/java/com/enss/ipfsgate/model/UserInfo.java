@@ -59,12 +59,14 @@ public class UserInfo {
      */
     private String uFromPasswd;
 
+    private String uEmail;
+
     /**
      *
      * @mbg.generated 2020-02-14
      */
     public UserInfo(Integer uId, String uName, String uPassword, Integer uState, Integer uType, String uPhone,
-                    Date uCreateTime, Date uLastLogin, String uContractAddress, String uFromAddress, String uFromPasswd) {
+                    Date uCreateTime, Date uLastLogin, String uContractAddress, String uFromAddress, String uFromPasswd, String uEmail) {
         this.uId = uId;
         this.uName = uName;
         this.uPassword = uPassword;
@@ -76,6 +78,7 @@ public class UserInfo {
         this.uContractAddress = uContractAddress;
         this.uFromAddress = uFromAddress;
         this.uFromPasswd = uFromPasswd;
+        this.uEmail = uEmail;
     }
 
     public UserInfo(String uName, String uPassword) {
@@ -83,10 +86,11 @@ public class UserInfo {
         this.uPassword = uPassword;
     }
 
-    public UserInfo(String uName, String uPassword, String uPhone) {
+    public UserInfo(String uName, String uPassword, String uPhone, String uEmail) {
         this.uName = uName;
         this.uPhone = uPhone;
         this.uPassword = uPassword;
+        this.uEmail = uEmail;
     }
 
     /**
@@ -248,5 +252,13 @@ public class UserInfo {
 
     public void setuFromPasswd(String uFromPasswd) {
         this.uFromPasswd = uFromPasswd;
+    }
+
+    public String getuEmail() {
+        return uEmail;
+    }
+
+    public void setuEmail(String uEmail) {
+        this.uEmail = uEmail;
     }
 }

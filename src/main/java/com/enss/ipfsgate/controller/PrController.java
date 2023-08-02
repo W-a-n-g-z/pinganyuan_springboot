@@ -22,14 +22,14 @@ public class PrController {
     }
     @RequestMapping("/search")
     public List<PrInfo> search(){
-        PrInfo prInfo = new PrInfo("twf","test","无","未通过","无");
+        //PrInfo prInfo = new PrInfo("twf","test","无","未通过","无");
         String repo_name="test";
         String member_name="twf";
         return prService.search(repo_name,member_name);
     }
     @RequestMapping("/agree")
     public void agree(){
-        PrInfo prInfo = new PrInfo("twf","test","无","未通过","无");
+        //PrInfo prInfo = new PrInfo("twf","test","无","未通过","无");
         String repo_name="test";
         String member_name="twf";
         prService.agree(repo_name,member_name);

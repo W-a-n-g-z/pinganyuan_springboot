@@ -6,7 +6,9 @@
         <constructor>
             <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
             <arg column="repo_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="repo_label" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="repo_language" javaType="java.lang.String" jdbcType="VARCHAR" />
         </constructor>
     </resultMap>
     <resultMap id="repoResultMap" type="java.util.Map">
@@ -20,7 +22,7 @@
         <result property="rUser" column="email"/>
     </resultMap>-->
 
-    <!-- 查询 -->
+    <!-- 仓库查询 -->
     <select id="search" parameterType="com.enss.ipfsgate.model.RepoInfo" resultMap="repoResultMap">
         SELECT *
         FROM repo
@@ -46,8 +48,24 @@
         )
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="rId" parameterType="com.enss.ipfsgate.model.RepoInfo">
-        insert into repo (repo_name, user_id, repo_lable, repo_language)
+        insert into repo (repo_name, user_name, repo_label, repo_language)
         values (#{rName,jdbcType=VARCHAR}, #{rUser,jdbcType=VARCHAR},
-                #{repo_lable,jdbcType=VARCHAR}, #{repo_lauguage,jdbcType=VARCHAR})
+                #{repo_label,jdbcType=VARCHAR}, #{repo_language,jdbcType=VARCHAR})
     </insert>
+    <!-- 查询某人的所有仓库 -->
+    <select id="onesRepo" parameterType="String" resultMap="repoResultMap">
+        SELECT *
+        FROM repo
+        WHERE user_name = #{user_name,jdbcType=VARCHAR}
+    </select>
+    <!-- 查询某人的参与仓库 -->
+    <select id="someoneInRepo" parameterType="String" resultMap="repoResultMap">
+        SELECT *
+        FROM repo
+        WHERE repo_name IN (
+            SELECT repo_name
+            FROM repo_member
+            WHERE member_name= #{member_name,jdbcType=VARCHAR}
+            )
+    </select>
 </mapper>

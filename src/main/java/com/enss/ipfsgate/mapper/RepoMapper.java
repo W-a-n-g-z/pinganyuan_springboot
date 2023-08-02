@@ -1,6 +1,7 @@
 package com.enss.ipfsgate.mapper;
 
 import com.enss.ipfsgate.model.RepoInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -17,5 +18,11 @@ public interface RepoMapper {
 
     //活跃仓库
     List<Map<String,Object>> activeRepo();
+
+    //某人拥有的仓库
+    List<Map<String,Object>> onesRepo(@Param("user_name") String user_name);
+
+    //某人参与的仓库
+    List<Map<String,Object>> someoneInRepo(@Param("member_name") String member_name);
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PrServiceImpl implements PrService {
@@ -24,7 +25,22 @@ public class PrServiceImpl implements PrService {
     }
 
     @Override
+    public List<PrInfo> searchRepo(String repo_name) {
+        return prMapper.searchRepo(repo_name);
+    }
+
+    @Override
     public void agree(String repo_name, String member_name) {
         prMapper.agree(repo_name,member_name);
+    }
+
+    @Override
+    public List<Map<String, Object>> onesPr(String member_name) {
+        return prMapper.onesPr(member_name);
+    }
+
+    @Override
+    public List<Map<String, Object>> managePr(String member_name) {
+        return prMapper.managePr(member_name);
     }
 }

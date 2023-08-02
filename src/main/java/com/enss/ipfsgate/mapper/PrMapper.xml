@@ -17,10 +17,31 @@
             AND repo_name = #{repo_name,jdbcType=VARCHAR}
     </update>
     <select id="search" parameterType="String" resultMap="prResultMap">
-        SELECT member_name, repo_name, apply_describe,apply_state,notes
+        SELECT *
         FROM apply
         WHERE member_name = #{member_name,jdbcType=VARCHAR}
           AND repo_name = #{repo_name,jdbcType=VARCHAR}
         ORDER BY id DESC LIMIT 1
+    </select>
+    <select id="searchRepo" parameterType="String" resultMap="prResultMap">
+        SELECT *
+        FROM apply
+        WHERE repo_name = #{repo_name,jdbcType=VARCHAR}
+        ORDER BY id DESC
+    </select>
+    <select id="onesPr" parameterType="String" resultMap="prResultMap">
+        SELECT *
+        FROM apply
+        WHERE member_name = #{member_name,jdbcType=VARCHAR}
+    </select>
+    <select id="managePr" parameterType="String" resultMap="prResultMap">
+        SELECT *
+        FROM apply
+        WHERE repo_name IN (
+            SELECT repo_name
+            FROM repo_member
+            WHERE member_name = #{member_name,jdbcType=VARCHAR}
+                AND member_manager = 1
+            )
     </select>
 </mapper>
