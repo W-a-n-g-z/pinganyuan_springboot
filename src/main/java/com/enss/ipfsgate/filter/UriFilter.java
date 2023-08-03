@@ -43,10 +43,10 @@ public class UriFilter implements Filter {
         String uri = request.getRequestURI();
         boolean needFilter = isNeedFilter(uri);
 
-        //logger.info("URL:" + uri + " - is not need filter");
+        logger.info("URL:" + uri + " - is not need filter");
         //api接口放行
         filterChain.doFilter(request, response);
-        return;
+        //return;
     }
 
     @Override

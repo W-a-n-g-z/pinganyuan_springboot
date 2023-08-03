@@ -17,6 +17,11 @@
           AND file_path = #{file_path,jdbcType=VARCHAR}
         ORDER BY id DESC LIMIT 1
     </select>
+    <select id="searchrepo" parameterType="String" resultMap="fileResultMap">
+        SELECT *
+        FROM repo_file
+        WHERE repo_name = #{repo_name,jdbcType=VARCHAR}
+    </select>
     <select id="selectAll" resultMap="fileResultMap">
         SELECT *
         FROM repo_file

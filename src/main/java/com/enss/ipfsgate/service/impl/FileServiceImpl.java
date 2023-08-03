@@ -20,6 +20,11 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public List<FileInfo> searchrepo(String repo_name) {
+        return fileMapper.searchrepo(repo_name);
+    }
+
+    @Override
     public List<Map<String, Object>> selectAll() {
         return fileMapper.selectAll();
     }

@@ -21,13 +21,13 @@ public class UserController {
     }
 
     @RequestMapping("/login")
-    public int login(){
-        return userService.Login("wzy","222");
+    public int login(String username,String password){
+        return userService.Login(username,password);
     }
 
     @RequestMapping("/register")
-    public int register(){
-        UserInfo userInfo = new UserInfo("xxx","12119","123456789", "111@qq.com");
+    public int register(String username, String password, String phone, String email){
+        UserInfo userInfo = new UserInfo(username,password,phone,email);
         return userService.regUser(userInfo);
     }
 

@@ -1,21 +1,24 @@
 package com.enss.ipfsgate.controller;
 
+import com.enss.ipfsgate.service.IssueService;
 import com.enss.ipfsgate.service.PrService;
 import com.enss.ipfsgate.service.RepoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/workbench")
 public class WorkbenchController {
     @Autowired
     private RepoService repoService;
     @Autowired
     private PrService prService;
+    @Autowired
+    private IssueService issueService;
 
     @RequestMapping("/ownerrepo")
     public List<Map<String,Object>> ownerRepo(String user_name){
@@ -37,6 +40,12 @@ public class WorkbenchController {
     @RequestMapping("/managepr")
     public List<Map<String,Object>> managePr(String member_name){
         return prService.managePr(member_name);
+    }
+
+    //某人发布的issue
+    @RequestMapping("/onesissue")
+    public List<Map<String,Object>> onesIssue(String member_name){
+        return issueService.searchMem(member_name);
     }
 
 }
