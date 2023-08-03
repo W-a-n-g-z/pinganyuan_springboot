@@ -24,15 +24,16 @@ public class RepoController {
 
     //新建仓库
     @RequestMapping("/newrepo")
-    public int newRepo(){
-        RepoInfo repoInfo = new RepoInfo("test","twf","ceshi","java");
+    public int newRepo(String repo_name, String member_name, String repo_label, String repo_language){
+//        RepoInfo repoInfo = new RepoInfo("test","twf","ceshi","java");
+        RepoInfo repoInfo = new RepoInfo(repo_name,member_name,repo_label,repo_language);
         return repoService.newRepo(repoInfo);
     }
 
     //搜索仓库
     @RequestMapping("/search")
-    public List<RepoInfo> search(){
-        return repoService.search("test_repo");
+    public List<RepoInfo> search(String repo_name){
+        return repoService.search(repo_name);
     }
 
     //查看所有仓库

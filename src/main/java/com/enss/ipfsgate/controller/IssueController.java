@@ -1,14 +1,15 @@
 package com.enss.ipfsgate.controller;
 
 import com.enss.ipfsgate.service.IssueService;
+import com.enss.ipfsgate.utils.Resp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/issue")
 public class IssueController {
     @Autowired
@@ -16,8 +17,12 @@ public class IssueController {
 
     //新建issue
     @RequestMapping("/newissue")
-    public int newIssue(String repo_name, String member_name,String issue_content, String issue_label){
-        return issueService.insert(repo_name, member_name, issue_content, issue_label);
+    public Resp newIssue(String repo_name, String member_name,String issue_content, String issue_label){
+        int insertId = issueService.insert(repo_name, member_name, issue_content, issue_label);
+        if(insertId == 1)
+            return Resp.success("插入成功",insertId);
+        else
+            return Resp.error("插入失败",insertId);
     }
 
     //查询仓库的所有issue

@@ -14,7 +14,7 @@ public class IssueServiceImpl implements IssueService {
     private IssueMapper issueMapper;
 
     @Override
-    public int insert(String repo_name, String member_name, String issue_content, String issue_label) {
+    public Integer insert(String repo_name, String member_name, String issue_content, String issue_label) {
         return issueMapper.insert(repo_name, member_name, issue_content, issue_label);
     }
 
