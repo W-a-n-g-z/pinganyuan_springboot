@@ -54,21 +54,36 @@ public class FiscoUtil {
     }
 
 
-    /*************************************验证用户密码的合约*********************************************/
+    /*************************************验证用户身份的合约*********************************************/
 
     /**
      * 发布合约
      * @return 返回区块链收据实体
      */
-    public TransactionResponse deployFiatShamirBase() {
+    public TransactionResponse deployContract(String contractName) {
         TransactionResponse response = null;
         try {
-            response = transactionProcessor.deployByContractLoader("FiatShamir", new ArrayList<>());
+            response = transactionProcessor.deployByContractLoader(contractName, new ArrayList<>());
         } catch (Exception e) {
             e.printStackTrace();
         }
         return response;
     }
+
+    /***
+     * 执行智能合约上的指定函数
+     */
+    public TransactionResponse execFiatShamirContract(String priKey, List<Object> paramList, String contractAddress,String contractName,String functionName) throws Exception {
+        CryptoKeyPair cryptoKeyPair = cryptoSuite.createKeyPair(priKey);
+        AssembleTransactionProcessor assembleTransactionProcessor = TransactionProcessorFactory.createAssembleTransactionProcessor(
+                coralClient, cryptoKeyPair, "src/main/resources/abi/", "src/main/resources/bin/");
+        TransactionResponse transactionResponse = assembleTransactionProcessor.sendTransactionAndGetResponseByContractLoader(
+                contractName, contractAddress, functionName, paramList);
+        return transactionResponse;
+    }
+
+
+
 
     /**
      * 将全量日志数据上珊瑚链，key-value结构
@@ -89,20 +104,5 @@ public class FiscoUtil {
                 "FullLog", contractAddress, "set", paramList);
         return transactionResponse;
     }
-
-    /**
-     * 查询珊瑚链数据上链信息
-     * @param ipfsHash 文件存储在ipfs的hash
-     * @return
-     */
-    public TransactionResponse searchFullLogChainInfo(String ipfsHash, String contractAddress) throws ABICodecException, TransactionBaseException {
-        List<Object> paramList = new ArrayList<Object>();
-        paramList.add(ipfsHash);
-        // 调用FullLog合约，合约地址为contractAddress， 调用函数名为『get』，函数参数类型为ipfsHash
-        TransactionResponse transactionResponse = transactionProcessor.sendTransactionAndGetResponseByContractLoader(
-                "FullLog", contractAddress, "get", paramList);
-        return transactionResponse;
-    }
-
 
 }

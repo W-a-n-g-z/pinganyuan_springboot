@@ -23,13 +23,15 @@ public class HashUtil {
         return bytesToHex(output);
     }
 
-    private static String bytesToHex(byte[] bytes) {
+    public static String bytesToHex(byte[] bytes) {
         StringBuilder result = new StringBuilder();
         for (byte b : bytes) {
             result.append(String.format("%02x", b));
         }
         return result.toString();
     }
+
+
 
     public static void main(String[] args) throws NoSuchAlgorithmException {
         BigInteger bigInteger = new BigInteger(HashUtil.getStrSha256("Hello"), 16);

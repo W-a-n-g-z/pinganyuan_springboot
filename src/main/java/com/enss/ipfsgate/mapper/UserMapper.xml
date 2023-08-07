@@ -38,7 +38,7 @@
         from user
     </select>
     <!-- 登陆 -->
-    <select id="Login" parameterType="com.enss.ipfsgate.model.UserInfo" resultType="int">
+    <select id="Login" parameterType="com.enss.ipfsgate.model.UserInfo" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM user
         WHERE user_name = #{uName,jdbcType=VARCHAR} AND user_password = #{uPassword,jdbcType=VARCHAR}
     </select>
