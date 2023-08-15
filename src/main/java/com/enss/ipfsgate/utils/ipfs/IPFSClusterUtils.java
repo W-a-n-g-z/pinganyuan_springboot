@@ -2,6 +2,7 @@ package com.enss.ipfsgate.utils.ipfs;
 
 import com.enss.ipfsgate.config.AppConfigSchedule;
 import com.enss.ipfsgate.utils.Constant;
+import com.enss.ipfsgate.utils.JsonUtil;
 import com.enss.ipfsgate.utils.Resp;
 import io.ipfs.api.IPFS;
 import io.ipfs.api.MerkleNode;
@@ -14,6 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class IPFSClusterUtils {
 
@@ -38,6 +40,20 @@ public class IPFSClusterUtils {
             return new Resp(1, "文件上传IPFS Cluster失败");
         }
         return new Resp(0, "文件上传IPFS Cluster成功",result.toJSONString());//返回结果里面获取保存文件的唯一hash，基于文件内容的 hash
+    }
+
+    //从上传文件的json字符串中获取文件hash
+    public String getHashFromResp(Resp resp){
+        HashMap<String, Object> jsonRetInfo = JsonUtil.jsonToMap(resp.getData().toString());
+        String ipfsHash = jsonRetInfo.get("Hash").toString();
+        return ipfsHash;
+    }
+
+    //从上传文件的json字符串中获取文件大小
+    public Integer getSizeFromResp(Resp resp){
+        HashMap<String, Object> jsonRetInfo = JsonUtil.jsonToMap(resp.getData().toString());
+        int logSize = Integer.parseInt(jsonRetInfo.get("Hash").toString());
+        return logSize;
     }
 
     //IPFS下载文件

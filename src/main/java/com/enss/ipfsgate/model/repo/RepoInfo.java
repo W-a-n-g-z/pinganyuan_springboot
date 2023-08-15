@@ -1,4 +1,4 @@
-package com.enss.ipfsgate.model;
+package com.enss.ipfsgate.model.repo;
 
 public class RepoInfo {
     private Integer rId;

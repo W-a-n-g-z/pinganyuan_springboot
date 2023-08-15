@@ -1,6 +1,8 @@
 package com.enss.ipfsgate.service;
 
-import com.enss.ipfsgate.model.RepoInfo;
+import com.enss.ipfsgate.model.repo.RepoInfo;
+import com.enss.ipfsgate.model.repo.vo.RepoInfoVo;
+import com.enss.ipfsgate.utils.Resp;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,8 +10,11 @@ import java.util.Map;
 
 @Service
 public interface RepoService {
-    //登录
-    List<RepoInfo> search(String reponame);
+    //模糊查询
+    List<RepoInfoVo> search(RepoInfoVo repoInfoVo);
+    Integer searchCount(RepoInfoVo repoInfoVo);
+    //单查
+    List<RepoInfoVo> searchDetail(RepoInfoVo repoInfoVo);
 
     //注册账户
     int newRepo(RepoInfo repoInfo);

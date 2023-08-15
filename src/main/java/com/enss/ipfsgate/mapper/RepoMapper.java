@@ -1,14 +1,19 @@
 package com.enss.ipfsgate.mapper;
 
-import com.enss.ipfsgate.model.RepoInfo;
+import com.enss.ipfsgate.model.repo.RepoInfo;
+import com.enss.ipfsgate.model.repo.vo.RepoInfoVo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
+@Component
 public interface RepoMapper {
     //查询
-    List<RepoInfo> search(RepoInfo record);
+    List<RepoInfoVo> search(RepoInfoVo repoInfoVo);
+    Integer searchCount(RepoInfoVo repoInfoVo);
+    List<RepoInfoVo> searchDetail(RepoInfoVo repoInfoVo);
 
     //登录
     List<Map<String,Object>> selectAll();

@@ -2,15 +2,11 @@
 package com.enss.ipfsgate.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.enss.ipfsgate.config.AppConfigSchedule;
 import com.enss.ipfsgate.model.config.Contract;
-import com.enss.ipfsgate.model.threat.FullLogInfo;
 import com.enss.ipfsgate.service.ContractService;
-import com.enss.ipfsgate.service.FullLogInfoService;
 import com.enss.ipfsgate.utils.Resp;
 import com.enss.ipfsgate.utils.fisco.web3j.FiscoUtil;
 import com.enss.ipfsgate.utils.zero.fiatshamir.FiatShamirUtil;
-import org.fisco.bcos.sdk.model.TransactionReceipt;
 import org.fisco.bcos.sdk.transaction.model.dto.TransactionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigInteger;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -39,7 +31,7 @@ public class ContractController {
     private FiscoUtil fiscoUtil;
 
     /**
-     * 发布智能合约，1验证用户零知识
+     * 发布智能合约，1验证用户零知识，2文件信息上链
      */
     @RequestMapping(value = "deployContractBase")
     public Resp deployFullLogBase(@RequestParam Integer contractType,@RequestParam String contractName){
@@ -48,6 +40,8 @@ public class ContractController {
         System.out.println("contractName:"+contractName);
         if(1==contractType){
             deployResult = fiscoUtil.deployContract("FiatShamir");
+        }else if(2==contractType){
+            deployResult = fiscoUtil.deployContract("RepoFile");
         }else{
             return Resp.error("不支持的合约类型");
         }

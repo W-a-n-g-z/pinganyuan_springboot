@@ -26,4 +26,45 @@
         SELECT *
         FROM repo_file
     </select>
+
+
+    <insert id="insertRepoFile" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.enss.ipfsgate.model.threat.RepoFile">
+        insert into repo_file
+        (
+            repo_id,file_name,relative_path,upload_date,file_size,file_size_str,temp_save_path,
+            ipfs_hash,ipfs_state,remark
+        )
+        values
+        (
+            #{repoId},#{fileName},#{relativePath},NOW(),#{fileSize},#{fileSizeStr},#{tempSavePath},
+            #{ipfsHash},#{ipfsState},#{remark}
+        )
+    </insert>
+
+    <update id="updateChainHash" parameterType="com.enss.ipfsgate.model.threat.RepoFile">
+        UPDATE
+            repo_file
+        SET
+            chain_hash = #{chainHash},chain_state = #{chainState},chain_height = #{chainHeight}
+        WHERE
+            id = #{id}
+    </update>
+
+    <update id="updateTempSavePath" parameterType="com.enss.ipfsgate.model.threat.RepoFile">
+        UPDATE
+            repo_file
+        SET
+            temp_save_path = #{tempSavePath}
+        WHERE
+            id = #{id}
+    </update>
+
+    <update id="updateTempUrl" parameterType="com.enss.ipfsgate.model.threat.RepoFile">
+        UPDATE
+            repo_file
+        SET
+            temp_url = #{tempUrl}
+        WHERE
+            id = #{id}
+    </update>
 </mapper>

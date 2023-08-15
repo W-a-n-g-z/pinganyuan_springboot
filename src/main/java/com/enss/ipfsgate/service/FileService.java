@@ -1,8 +1,20 @@
 package com.enss.ipfsgate.service;
 
+import com.alibaba.fastjson.JSON;
+import com.enss.ipfsgate.config.AppConfigSchedule;
 import com.enss.ipfsgate.model.FileInfo;
+import com.enss.ipfsgate.model.threat.RepoFile;
+import com.enss.ipfsgate.utils.JsonUtil;
+import com.enss.ipfsgate.utils.Resp;
+import com.enss.ipfsgate.utils.ipfs.IPFSClusterUtils;
+import org.fisco.bcos.sdk.model.TransactionReceipt;
+import org.fisco.bcos.sdk.transaction.model.dto.TransactionResponse;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +30,24 @@ public interface FileService {
 
     //新建
     int insert(FileInfo record);
+
+    //新增文件信息
+    int insertRepoFile(RepoFile repoFile);
+
+    //更新链哈希
+    int updateChainHash(RepoFile repoFile);
+
+    //更新临时存储路径
+    int updateTempSavePath(RepoFile repoFile);
+
+    //更新对外提供访问的临时url，暂时可能没用
+    int updateTempUrl(RepoFile repoFile);
+
+    /***
+     * 文件上传ipfs、信息上链，并更新数据库
+     * @param repoFile
+     */
+    public Resp uploadIpfsAndChain(RepoFile repoFile);
+
+
 }

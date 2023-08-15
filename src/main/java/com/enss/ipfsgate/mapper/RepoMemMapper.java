@@ -1,10 +1,12 @@
 package com.enss.ipfsgate.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
+@Component
 public interface RepoMemMapper {
     //查询所有成员
     List<Map<String,Object>> selectAllMember();

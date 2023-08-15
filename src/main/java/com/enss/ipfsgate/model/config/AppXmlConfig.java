@@ -17,20 +17,8 @@ public class AppXmlConfig {
     @Value("${ipfs.ec.num}")
     public Integer ecNums;     //ipfs ec节点数量
 
-    @Value("${LogCacheAbsolutePath}")
-    public String logCacheAbsolutePath;
-
-    @Value("${OldYearTest}")
-    public String oldYearTest;
-
-    @Value("${OldMonthTest}")
-    public String oldMonthTest;
-
-    @Value("${OldDayTest}")
-    public String oldDayTest;
-
-    @Value("${ignoreSrcs}")
-    public String ignoreSrcs;
+    @Value("${fileCachePath}")
+    public String fileCachePath;
 
     @Value("${sdk.ip}")
     public String sdkIp;
@@ -41,13 +29,12 @@ public class AppXmlConfig {
     @Value("${upChainKey}")
     public String upChainKey;
 
-    @Value("${pyServerIp}")
-    public String pyServerIp;
+    //节点数量
+    @Value("${sdk.num}")
+    public Integer sdkNum;
+    //节点协议类型,1原共识，2异步共识协议
+    @Value("${sdk.type}")
+    public Integer sdkType;
 
-    @Value("${pyServerPort}")
-    public int pyServerPort;
-
-    @Value("${threatServerIp}")
-    public String threatServerIp;
 
 }

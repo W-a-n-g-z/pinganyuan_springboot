@@ -2,10 +2,12 @@ package com.enss.ipfsgate.mapper;
 
 import com.enss.ipfsgate.model.PrInfo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
+@Component
 public interface PrMapper {
     //新建
     int insert(PrInfo record);
