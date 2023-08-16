@@ -1,6 +1,8 @@
 package com.enss.ipfsgate.service;
 
+import com.enss.ipfsgate.model.repo.RepoBranch;
 import com.enss.ipfsgate.model.repo.RepoInfo;
+import com.enss.ipfsgate.model.repo.vo.RepoBranchVo;
 import com.enss.ipfsgate.model.repo.vo.RepoInfoVo;
 import com.enss.ipfsgate.utils.Resp;
 import org.springframework.stereotype.Service;
@@ -30,4 +32,11 @@ public interface RepoService {
 
     //某人参与的仓库
     List<Map<String,Object>> someoneInRepo(String member_name);
+
+    //某个仓库的分支列表
+    public List<RepoBranchVo> selectBranchList(int repoId);
+
+    public int addBranch(RepoBranch repoBranch);
+
+    int addDepo(RepoInfo repoInfo);
 }

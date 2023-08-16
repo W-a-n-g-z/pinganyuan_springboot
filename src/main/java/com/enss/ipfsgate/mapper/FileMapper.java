@@ -1,7 +1,7 @@
 package com.enss.ipfsgate.mapper;
 
 import com.enss.ipfsgate.model.FileInfo;
-import com.enss.ipfsgate.model.threat.RepoFile;
+import com.enss.ipfsgate.model.repo.RepoFile;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -34,4 +34,6 @@ public interface FileMapper {
 
     //更新对外提供访问的临时url，暂时可能没用
     int updateTempUrl(RepoFile repoFile);
+
+    int updateFileInfo(RepoFile repoFile);
 }

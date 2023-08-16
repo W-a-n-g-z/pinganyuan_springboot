@@ -2,17 +2,15 @@ package com.enss.ipfsgate.controller;
 
 import com.enss.ipfsgate.config.AppConfigSchedule;
 import com.enss.ipfsgate.model.FileInfo;
-import com.enss.ipfsgate.model.threat.RepoFile;
+import com.enss.ipfsgate.model.repo.RepoBranch;
+import com.enss.ipfsgate.model.repo.RepoFile;
 import com.enss.ipfsgate.service.FileService;
 import com.enss.ipfsgate.utils.Resp;
 import com.enss.ipfsgate.utils.file.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -63,7 +61,7 @@ public class FileController {
      */
     @ResponseBody
     @RequestMapping("uploadRepoFile")
-    public Resp uploadDataFile(@RequestParam String fName, @RequestParam String fSize,@RequestParam Integer repoId,
+    public Resp uploadDataFile(@RequestParam String fName, @RequestParam String fSize,@RequestParam Integer repoId,@RequestParam Integer branchId,
                                @RequestParam String relativePath, @RequestParam("uploadFile") MultipartFile multipartFile) {
         //接收上传文件
         log.info("上传的文件名称为:{}", fName);
@@ -88,6 +86,7 @@ public class FileController {
         //插入文件信息
         RepoFile uploadDataFile = new RepoFile();
         uploadDataFile.setRepoId(repoId);
+        uploadDataFile.setBranchId(branchId);
         uploadDataFile.setFileName(fName);
         uploadDataFile.setRelativePath(relativePath);
         uploadDataFile.setFileSize(new BigInteger(fSize));
@@ -95,4 +94,13 @@ public class FileController {
         uploadDataFile.setTempSavePath(fileWholePath);
         return fileService.uploadIpfsAndChain(uploadDataFile);
     }
+
+    @RequestMapping("/updateFileInfo")
+    public Resp updateFileInfo(@RequestBody RepoFile repoFile){
+        System.out.println("repoFile.remark:"+repoFile.getRemark());
+        System.out.println("repoFile.id:"+repoFile.getId());
+        fileService.updateFileInfo(repoFile);
+        return Resp.success("保存成功！");
+    }
+
 }

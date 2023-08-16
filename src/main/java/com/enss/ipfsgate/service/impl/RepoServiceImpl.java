@@ -2,7 +2,9 @@ package com.enss.ipfsgate.service.impl;
 
 import com.enss.ipfsgate.mapper.OperateMapper;
 import com.enss.ipfsgate.mapper.RepoMapper;
+import com.enss.ipfsgate.model.repo.RepoBranch;
 import com.enss.ipfsgate.model.repo.RepoInfo;
+import com.enss.ipfsgate.model.repo.vo.RepoBranchVo;
 import com.enss.ipfsgate.model.repo.vo.RepoInfoVo;
 import com.enss.ipfsgate.service.RepoService;
 import com.enss.ipfsgate.utils.Resp;
@@ -63,5 +65,27 @@ public class RepoServiceImpl implements RepoService {
     @Override
     public List<Map<String, Object>> someoneInRepo(String member_name) {
         return repoMapper.someoneInRepo(member_name);
+    }
+
+    @Override
+    public List<RepoBranchVo> selectBranchList(int repoId){
+        return repoMapper.selectBranchList(repoId);
+    }
+
+    @Override
+    public int addBranch(RepoBranch repoBranch){
+        return repoMapper.addBranch(repoBranch);
+    }
+
+    @Override
+    public int addDepo(RepoInfo repoInfo) {
+        repoMapper.addDepo(repoInfo);
+
+        RepoBranch repoBranch = new RepoBranch();
+        repoBranch.setRepoId(repoInfo.getrId());
+        repoBranch.setBranchName("master");
+        repoMapper.addBranch(repoBranch);
+
+        return repoInfo.getrId();
     }
 }

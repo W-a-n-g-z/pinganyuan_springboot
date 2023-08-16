@@ -2,23 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.enss.ipfsgate.mapper.RepoMapper">
 
-    <resultMap id="baseResultMap" type="com.enss.ipfsgate.model.repo.vo.RepoInfoVo">
-        <constructor>
-            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-            <arg column="repo_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="repo_label" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <arg column="repo_language" javaType="java.lang.String" jdbcType="VARCHAR" />
-        </constructor>
-    </resultMap>
-
+    <!-- 仓库列表result list -->
     <resultMap id="repoResultMap" type="com.enss.ipfsgate.model.repo.RepoInfo">
         <result property="rId" column="id" />
         <result property="rName" column="repo_name" />
         <result property="rUser" column="user_name" />
         <result property="repo_label" column="repo_label" />
         <result property="repo_language" column="repo_language" />
+        <result property="desc" column="repo_desc" />
     </resultMap>
+
+    <!-- 文件列表result list -->
+    <resultMap id="repoFileResultMap" type="com.enss.ipfsgate.model.repo.vo.RepoFileVo">
+        <result property="id" column="id" />
+        <result property="repoId" column="repo_id" />
+        <result property="branchId" column="branch_id" />
+        <result property="fileName" column="file_name" />
+        <result property="relativePath" column="relative_path" />
+        <result property="uploadDate" column="upload_date" />
+        <result property="fileType" column="file_type" />
+        <result property="fileTypeName" column="file_type_name" />
+        <result property="fileSize" column="file_size" />
+        <result property="fileSizeStr" column="file_size_str" />
+        <result property="tempSavePath" column="temp_save_path" />
+        <result property="tempUrl" column="temp_url" />
+        <result property="ipfsHash" column="ipfs_hash" />
+        <result property="ipfsState" column="ipfs_state" />
+        <result property="chainHash" column="chain_hash" />
+        <result property="chainState" column="chain_state" />
+        <result property="chainHeight" column="chain_height" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <!-- 分支列表result list -->
+    <resultMap id="branchResultMap" type="com.enss.ipfsgate.model.repo.vo.RepoBranchVo">
+        <result property="id" column="id" />
+        <result property="repoId" column="repo_id" />
+        <result property="branchName" column="branch_name" />
+        <result property="desc" column="repo_desc" />
+        <association property="repoFileList" javaType="java.util.List" column="id" select="searchBranchFileList" />
+    </resultMap>
+    <!-- 查询分支包含的文件列表 -->
+    <select id="searchBranchFileList" parameterType="java.lang.Integer" resultMap="repoFileResultMap">
+        select * from repo_file where branch_id=#{id}
+    </select>
 
     <!-- 仓库模糊查询 -->
     <select id="search" parameterType="com.enss.ipfsgate.model.repo.vo.RepoInfoVo" resultMap="repoResultMap">
@@ -54,7 +81,7 @@
     </select>
     <!-- 单查 -->
     <select id="searchDetail" parameterType="com.enss.ipfsgate.model.repo.vo.RepoInfoVo" resultMap="repoResultMap">
-        select * from data_info where id=#{rId}
+        select * from repo where id=#{rId}
     </select>
 
     <!-- 查询所有仓库 -->
@@ -87,7 +114,8 @@
         FROM repo
         WHERE user_name = #{user_name,jdbcType=VARCHAR}
     </select>
-    <!-- 查询某人的参与仓库 -->
+
+    <!-- 查询某人的参与仓库，有时间可以优化为使用id作为查询条件 -->
     <select id="someoneInRepo" parameterType="String" resultMap="repoResultMap">
         SELECT *
         FROM repo
@@ -95,6 +123,31 @@
             SELECT repo_name
             FROM repo_member
             WHERE member_name= #{member_name,jdbcType=VARCHAR}
+            and member_manager = 0
             )
     </select>
+
+    <!-- 查询某个仓库底下的所有分支及文件列表 -->
+    <select id="selectBranchList" parameterType="java.lang.Integer" resultMap="branchResultMap">
+        SELECT * FROM repo_branch where repo_id = #{repoId}
+    </select>
+
+    <insert id="addBranch" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.enss.ipfsgate.model.repo.RepoBranch">
+        insert into repo_branch
+        (
+            repo_id,branch_name
+        )
+        values
+        (
+            #{repoId},#{branchName}
+        )
+    </insert>
+
+    <insert id="addDepo"  useGeneratedKeys="true" keyColumn="id" keyProperty="rId"  parameterType="com.enss.ipfsgate.model.repo.RepoInfo">
+        insert into repo (repo_name, user_name, repo_label, repo_language,repo_desc)
+        values (#{rName,jdbcType=VARCHAR}, #{rUser,jdbcType=VARCHAR},
+                #{repo_label,jdbcType=VARCHAR}, #{repo_language,jdbcType=VARCHAR},#{desc,jdbcType=VARCHAR})
+    </insert>
+
+
 </mapper>

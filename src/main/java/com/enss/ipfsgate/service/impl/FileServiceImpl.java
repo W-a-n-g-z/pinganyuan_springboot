@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.enss.ipfsgate.config.AppConfigSchedule;
 import com.enss.ipfsgate.mapper.FileMapper;
 import com.enss.ipfsgate.model.FileInfo;
-import com.enss.ipfsgate.model.threat.RepoFile;
+import com.enss.ipfsgate.model.repo.RepoFile;
 import com.enss.ipfsgate.service.ContractService;
 import com.enss.ipfsgate.service.FileService;
 import com.enss.ipfsgate.utils.JsonUtil;
@@ -131,6 +131,11 @@ public class FileServiceImpl implements FileService {
         }else{
             return Resp.warning("未知异常！");
         }
+    }
+
+    @Override
+    public int updateFileInfo(RepoFile repoFile) {
+        return fileMapper.updateFileInfo(repoFile);
     }
 
 

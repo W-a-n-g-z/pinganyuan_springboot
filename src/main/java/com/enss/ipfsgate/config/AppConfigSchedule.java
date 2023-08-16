@@ -2,28 +2,16 @@
 
 package com.enss.ipfsgate.config;
 
-import com.alibaba.fastjson.JSON;
 import com.enss.ipfsgate.model.config.AppXmlConfig;
-import com.enss.ipfsgate.model.threat.RepoFile;
 import com.enss.ipfsgate.service.ContractService;
 import com.enss.ipfsgate.service.FileService;
-import com.enss.ipfsgate.utils.JsonUtil;
-import com.enss.ipfsgate.utils.Resp;
 import com.enss.ipfsgate.utils.fisco.web3j.FiscoUtil;
-import com.enss.ipfsgate.utils.ipfs.IPFSClusterUtils;
-import org.fisco.bcos.sdk.model.TransactionReceipt;
-import org.fisco.bcos.sdk.transaction.model.dto.TransactionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-
-import java.io.File;
-import java.math.BigInteger;
-import java.util.HashMap;
 
 /***
  * 应用配置和计划任务

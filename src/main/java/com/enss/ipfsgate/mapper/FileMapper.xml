@@ -28,20 +28,20 @@
     </select>
 
 
-    <insert id="insertRepoFile" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.enss.ipfsgate.model.threat.RepoFile">
+    <insert id="insertRepoFile" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.enss.ipfsgate.model.repo.RepoFile">
         insert into repo_file
         (
-            repo_id,file_name,relative_path,upload_date,file_size,file_size_str,temp_save_path,
+            repo_id,branch_id,file_name,relative_path,upload_date,file_size,file_size_str,temp_save_path,
             ipfs_hash,ipfs_state,remark
         )
         values
         (
-            #{repoId},#{fileName},#{relativePath},NOW(),#{fileSize},#{fileSizeStr},#{tempSavePath},
+            #{repoId},#{branchId},#{fileName},#{relativePath},NOW(),#{fileSize},#{fileSizeStr},#{tempSavePath},
             #{ipfsHash},#{ipfsState},#{remark}
         )
     </insert>
 
-    <update id="updateChainHash" parameterType="com.enss.ipfsgate.model.threat.RepoFile">
+    <update id="updateChainHash" parameterType="com.enss.ipfsgate.model.repo.RepoFile">
         UPDATE
             repo_file
         SET
@@ -50,7 +50,7 @@
             id = #{id}
     </update>
 
-    <update id="updateTempSavePath" parameterType="com.enss.ipfsgate.model.threat.RepoFile">
+    <update id="updateTempSavePath" parameterType="com.enss.ipfsgate.model.repo.RepoFile">
         UPDATE
             repo_file
         SET
@@ -59,7 +59,7 @@
             id = #{id}
     </update>
 
-    <update id="updateTempUrl" parameterType="com.enss.ipfsgate.model.threat.RepoFile">
+    <update id="updateTempUrl" parameterType="com.enss.ipfsgate.model.repo.RepoFile">
         UPDATE
             repo_file
         SET
@@ -67,4 +67,10 @@
         WHERE
             id = #{id}
     </update>
+
+    <update id="updateFileInfo" parameterType="com.enss.ipfsgate.model.repo.RepoFile">
+        UPDATE repo_file SET remark = #{remark}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

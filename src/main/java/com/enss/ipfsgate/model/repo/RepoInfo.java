@@ -6,6 +6,15 @@ public class RepoInfo {
     private String rUser;
     private String repo_label;
     private String repo_language;
+    private String desc;
+
+    public RepoInfo() {
+        super();
+    }
+
+    public RepoInfo(String rName){
+        this.rName=rName;
+    }
 
     public RepoInfo(Integer rId,String rName,String rUser,String repo_label,String repo_language){
         this.rId=rId;
@@ -20,11 +29,14 @@ public class RepoInfo {
         this.repo_label=repo_label;
         this.repo_language=repo_language;
     }
-    public RepoInfo(String rName){
-        this.rName=rName;
-    }
-    public RepoInfo() {
-        super();
+
+    public RepoInfo(Integer rId, String rName, String rUser, String repo_label, String repo_language, String desc) {
+        this.rId = rId;
+        this.rName = rName;
+        this.rUser = rUser;
+        this.repo_label = repo_label;
+        this.repo_language = repo_language;
+        this.desc = desc;
     }
 
     public Integer getrId() {
@@ -65,5 +77,13 @@ public class RepoInfo {
 
     public void setRepo_language(String repo_language) {
         this.repo_language = repo_language;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }

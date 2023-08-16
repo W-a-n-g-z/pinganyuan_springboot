@@ -1,4 +1,4 @@
-package com.enss.ipfsgate.model.threat;
+package com.enss.ipfsgate.model.repo;
 
 import com.enss.ipfsgate.utils.JsonUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,7 +16,8 @@ import java.util.HashMap;
 public class RepoFile {
 
     private Integer id;                 //主键，自增
-    private Integer repoId;             //文件所属仓库id
+    private Integer repoId;             //文件所属仓库id，过时字段
+    private Integer branchId;           //文件所属分支id
     private String fileName;            //文件名
     private String relativePath;        //在仓库中相对根目录路径
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
@@ -38,9 +39,10 @@ public class RepoFile {
     public RepoFile(){
     }
 
-    public RepoFile(Integer id, Integer repoId, String fileName, String relativePath, Date uploadDate, Integer fileType, String fileTypeName, BigInteger fileSize, String fileSizeStr, String tempSavePath, String tempUrl, String ipfsHash, Integer ipfsState, String chainHash, Integer chainState, String chainHeight, String remark) {
+    public RepoFile(Integer id, Integer repoId, Integer branchId, String fileName, String relativePath, Date uploadDate, Integer fileType, String fileTypeName, BigInteger fileSize, String fileSizeStr, String tempSavePath, String tempUrl, String ipfsHash, Integer ipfsState, String chainHash, Integer chainState, String chainHeight, String remark) {
         this.id = id;
         this.repoId = repoId;
+        this.branchId = branchId;
         this.fileName = fileName;
         this.relativePath = relativePath;
         this.uploadDate = uploadDate;
@@ -72,6 +74,14 @@ public class RepoFile {
 
     public void setRepoId(Integer repoId) {
         this.repoId = repoId;
+    }
+
+    public Integer getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Integer branchId) {
+        this.branchId = branchId;
     }
 
     public String getFileName() {

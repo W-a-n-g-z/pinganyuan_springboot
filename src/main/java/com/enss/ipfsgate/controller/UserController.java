@@ -22,6 +22,8 @@ public class UserController {
 
     @RequestMapping("/login")
     public int login(String username,String password){
+        System.out.println("username:"+username);
+        System.out.println("password:"+password);
         return userService.Login(username,password);
     }
 

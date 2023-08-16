@@ -1,20 +1,10 @@
 package com.enss.ipfsgate.service;
 
-import com.alibaba.fastjson.JSON;
-import com.enss.ipfsgate.config.AppConfigSchedule;
 import com.enss.ipfsgate.model.FileInfo;
-import com.enss.ipfsgate.model.threat.RepoFile;
-import com.enss.ipfsgate.utils.JsonUtil;
+import com.enss.ipfsgate.model.repo.RepoFile;
 import com.enss.ipfsgate.utils.Resp;
-import com.enss.ipfsgate.utils.ipfs.IPFSClusterUtils;
-import org.fisco.bcos.sdk.model.TransactionReceipt;
-import org.fisco.bcos.sdk.transaction.model.dto.TransactionResponse;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,4 +40,5 @@ public interface FileService {
     public Resp uploadIpfsAndChain(RepoFile repoFile);
 
 
+    public int updateFileInfo(RepoFile repoFile);
 }

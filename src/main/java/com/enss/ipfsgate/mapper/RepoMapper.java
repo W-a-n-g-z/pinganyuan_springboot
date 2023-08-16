@@ -1,6 +1,8 @@
 package com.enss.ipfsgate.mapper;
 
+import com.enss.ipfsgate.model.repo.RepoBranch;
 import com.enss.ipfsgate.model.repo.RepoInfo;
+import com.enss.ipfsgate.model.repo.vo.RepoBranchVo;
 import com.enss.ipfsgate.model.repo.vo.RepoInfoVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -30,4 +32,10 @@ public interface RepoMapper {
     //某人参与的仓库
     List<Map<String,Object>> someoneInRepo(@Param("member_name") String member_name);
 
+    //某个仓库的分支列表
+    public List<RepoBranchVo> selectBranchList(int repoId);
+
+    public int addBranch(RepoBranch repoBranch);
+
+    int addDepo(RepoInfo repoInfo);
 }
