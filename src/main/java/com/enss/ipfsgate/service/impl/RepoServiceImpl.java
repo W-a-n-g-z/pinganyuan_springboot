@@ -88,4 +88,9 @@ public class RepoServiceImpl implements RepoService {
 
         return repoInfo.getrId();
     }
+
+    @Override
+    public int applyForAudit(int repoId) {
+        return repoMapper.applyForAudit(repoId);
+    }
 }

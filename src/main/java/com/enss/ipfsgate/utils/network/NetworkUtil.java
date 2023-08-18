@@ -1,7 +1,6 @@
 package com.enss.ipfsgate.utils.network;
 
 import com.alibaba.fastjson.JSON;
-import com.enss.ipfsgate.model.threat.ThreatAnalyInfo;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -169,16 +168,5 @@ public class NetworkUtil {
         return result;
     }
 
-    public static void main(String[] args) throws MalformedURLException {
-        //NetworkUtil.downloadNet("https://www.50minus1.com:5003/sklearn.joblib","e:/sklearn.joblib");
-        ThreatAnalyInfo threatAnalyInfo = new ThreatAnalyInfo();
-        threatAnalyInfo.setAnalyType("zeek");
-        threatAnalyInfo.setThreatDesc("测试威胁描述");
-        threatAnalyInfo.setNodeIp("192.168.1.154");
-        threatAnalyInfo.setThreatIp("3.3.3.3");
-        threatAnalyInfo.setTraceFileName("netlog-192.168.1.154-2022-10-9.log");
-        threatAnalyInfo.setTraceIpfsHash("QmQmnkDXKZMGytcjBtqQQCvzWYzvhyDKDYoDuh4PHJbQbg");
-        NetworkUtil.netPost("http://localhost:8880/threatMonitor/zeekAlert",JSON.toJSONString(threatAnalyInfo));
-    }
 
 }

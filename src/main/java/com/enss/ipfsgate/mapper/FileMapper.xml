@@ -5,6 +5,30 @@
         <result column="u_id" property="uId" javaType="java.lang.Integer" jdbcType="INTEGER" />
         <result column="u_name" property="uName" javaType="java.lang.String" jdbcType="VARCHAR" />
     </resultMap>
+    <!-- 文件列表result list -->
+    <resultMap id="repoFileResultMap" type="com.enss.ipfsgate.model.repo.vo.RepoFileVo">
+        <result property="id" column="id" />
+        <result property="repoId" column="repo_id" />
+        <result property="branchId" column="branch_id" />
+        <result property="fileName" column="file_name" />
+        <result property="relativePath" column="relative_path" />
+        <result property="uploadDate" column="upload_date" />
+        <result property="fileType" column="file_type" />
+        <result property="fileTypeName" column="file_type_name" />
+        <result property="fileSize" column="file_size" />
+        <result property="fileSizeStr" column="file_size_str" />
+        <result property="tempSavePath" column="temp_save_path" />
+        <result property="tempUrl" column="temp_url" />
+        <result property="ipfsHash" column="ipfs_hash" />
+        <result property="ipfsState" column="ipfs_state" />
+        <result property="chainHash" column="chain_hash" />
+        <result property="chainState" column="chain_state" />
+        <result property="chainHeight" column="chain_height" />
+        <result property="auditState" column="audit_state" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="fileId" parameterType="com.enss.ipfsgate.model.FileInfo">
         insert into repo_file (repo_name,file_name,file_path)
         values (#{repo_name,jdbcType=VARCHAR}, #{file_name,jdbcType=VARCHAR}, #{file_path,jdbcType=VARCHAR})
@@ -25,6 +49,18 @@
     <select id="selectAll" resultMap="fileResultMap">
         SELECT *
         FROM repo_file
+    </select>
+
+    <!-- 查询未审核的文件列表 -->
+    <select id="searchUnauditedFile" resultMap="repoFileResultMap">
+        SELECT * FROM repo_file
+        where audit_state = 0
+        order by id desc
+    </select>
+    <select id="searchUnauditedFileCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM repo_file
+        where audit_state = 0
+        order by id desc
     </select>
 
 
@@ -69,7 +105,7 @@
     </update>
 
     <update id="updateFileInfo" parameterType="com.enss.ipfsgate.model.repo.RepoFile">
-        UPDATE repo_file SET remark = #{remark}
+        UPDATE repo_file SET remark = #{remark},audit_state = #{auditState}
         WHERE id = #{id}
     </update>
 

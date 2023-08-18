@@ -1,14 +1,10 @@
 package com.enss.ipfsgate.model.repo;
 
-import com.enss.ipfsgate.utils.JsonUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigInteger;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * 全量日志的实体类，由于netlog目前结构一致，也适用与netlog
@@ -34,12 +30,13 @@ public class RepoFile {
     private String chainHash;           //文件上链哈希,同时作为上链的key
     private Integer chainState;         //上链状态，1.成功 2.失败 3.未知
     private String chainHeight;         //区块高度
+    private Integer auditState;        //审核状态:-1未勾选可信审核,0未审核，1审核可信，2审核不可信
     private String remark;              //备注
 
     public RepoFile(){
     }
 
-    public RepoFile(Integer id, Integer repoId, Integer branchId, String fileName, String relativePath, Date uploadDate, Integer fileType, String fileTypeName, BigInteger fileSize, String fileSizeStr, String tempSavePath, String tempUrl, String ipfsHash, Integer ipfsState, String chainHash, Integer chainState, String chainHeight, String remark) {
+    public RepoFile(Integer id, Integer repoId, Integer branchId, String fileName, String relativePath, Date uploadDate, Integer fileType, String fileTypeName, BigInteger fileSize, String fileSizeStr, String tempSavePath, String tempUrl, String ipfsHash, Integer ipfsState, String chainHash, Integer chainState, String chainHeight, Integer auditState, String remark) {
         this.id = id;
         this.repoId = repoId;
         this.branchId = branchId;
@@ -57,6 +54,7 @@ public class RepoFile {
         this.chainHash = chainHash;
         this.chainState = chainState;
         this.chainHeight = chainHeight;
+        this.auditState = auditState;
         this.remark = remark;
     }
 
@@ -196,6 +194,14 @@ public class RepoFile {
         this.chainHeight = chainHeight;
     }
 
+    public Integer getAuditState() {
+        return auditState;
+    }
+
+    public void setAuditState(Integer auditState) {
+        this.auditState = auditState;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -203,4 +209,5 @@ public class RepoFile {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
 }

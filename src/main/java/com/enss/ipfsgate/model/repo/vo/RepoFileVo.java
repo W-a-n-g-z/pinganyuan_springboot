@@ -3,10 +3,6 @@ package com.enss.ipfsgate.model.repo.vo;
 import com.enss.ipfsgate.model.repo.RepoFile;
 
 import java.math.BigInteger;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 
 public class RepoFileVo extends RepoFile {
@@ -16,8 +12,8 @@ public class RepoFileVo extends RepoFile {
     public RepoFileVo() {
     }
 
-    public RepoFileVo(Integer id, Integer repoId, Integer branchId, String fileName, String relativePath, Date uploadDate, Integer fileType, String fileTypeName, BigInteger fileSize, String fileSizeStr, String tempSavePath, String tempUrl, String ipfsHash, Integer ipfsState, String chainHash, Integer chainState, String chainHeight, String remark, String timeDesc) {
-        super(id, repoId, branchId, fileName, relativePath, uploadDate, fileType, fileTypeName, fileSize, fileSizeStr, tempSavePath, tempUrl, ipfsHash, ipfsState, chainHash, chainState, chainHeight, remark);
+    public RepoFileVo(Integer id, Integer repoId, Integer branchId, String fileName, String relativePath, Date uploadDate, Integer fileType, String fileTypeName, BigInteger fileSize, String fileSizeStr, String tempSavePath, String tempUrl, String ipfsHash, Integer ipfsState, String chainHash, Integer chainState, String chainHeight, Integer auditState, String remark, String timeDesc) {
+        super(id, repoId, branchId, fileName, relativePath, uploadDate, fileType, fileTypeName, fileSize, fileSizeStr, tempSavePath, tempUrl, ipfsHash, ipfsState, chainHash, chainState, chainHeight, auditState, remark);
         this.timeDesc = timeDesc;
     }
 

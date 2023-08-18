@@ -2,6 +2,7 @@ package com.enss.ipfsgate.utils.fisco.web3j;
 
 
 import com.enss.ipfsgate.config.AppConfigSchedule;
+import com.enss.ipfsgate.model.UserSign;
 import org.fisco.bcos.sdk.BcosSDK;
 import org.fisco.bcos.sdk.abi.ABICodecException;
 import org.fisco.bcos.sdk.client.Client;
@@ -151,6 +152,20 @@ public class FiscoUtil {
             timeCost = (timeCost * sdkNum / 10)*(sdkNum/100);
         }
         return timeCost/1.8*base;
+    }
+
+    /**
+     * 构造用户签名信息
+     */
+    public UserSign buildUserSignForRegister(Integer userId) {
+        CryptoKeyPair keyPair = cryptoSuite.createKeyPair();
+        return UserSign.builder()
+                .userId(userId)
+                .priKey(keyPair.getHexPrivateKey())
+                .address(keyPair.getAddress())
+                .pubKey(keyPair.getHexPublicKey())
+                .encryptType(cryptoSuite.getCryptoTypeConfig())
+                .signState(1).build();
     }
 
 }

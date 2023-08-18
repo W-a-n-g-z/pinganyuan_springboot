@@ -4,6 +4,8 @@ import com.enss.ipfsgate.config.AppConfigSchedule;
 import com.enss.ipfsgate.model.FileInfo;
 import com.enss.ipfsgate.model.repo.RepoBranch;
 import com.enss.ipfsgate.model.repo.RepoFile;
+import com.enss.ipfsgate.model.repo.vo.RepoFileVo;
+import com.enss.ipfsgate.model.repo.vo.RepoInfoVo;
 import com.enss.ipfsgate.service.FileService;
 import com.enss.ipfsgate.utils.Resp;
 import com.enss.ipfsgate.utils.file.FileUtil;
@@ -24,8 +26,6 @@ import java.util.Map;
 @RequestMapping("/file")
 @Slf4j
 public class FileController {
-
-
 
     @Autowired
     private FileService fileService;
@@ -97,10 +97,19 @@ public class FileController {
 
     @RequestMapping("/updateFileInfo")
     public Resp updateFileInfo(@RequestBody RepoFile repoFile){
-        System.out.println("repoFile.remark:"+repoFile.getRemark());
-        System.out.println("repoFile.id:"+repoFile.getId());
         fileService.updateFileInfo(repoFile);
         return Resp.success("保存成功！");
+    }
+
+    /**
+     * 查询未审核的文件
+     */
+    @ResponseBody
+    @RequestMapping("/searchUnauditedFile")
+    public Resp search(){
+        List<RepoFileVo> repoFileList = fileService.searchUnauditedFile();
+        int repoFileCount = fileService.searchUnauditedFileCount();
+        return Resp.success("查询成功!", repoFileList, repoFileCount);
     }
 
 }

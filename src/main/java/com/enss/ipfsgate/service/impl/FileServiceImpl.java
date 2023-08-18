@@ -5,6 +5,7 @@ import com.enss.ipfsgate.config.AppConfigSchedule;
 import com.enss.ipfsgate.mapper.FileMapper;
 import com.enss.ipfsgate.model.FileInfo;
 import com.enss.ipfsgate.model.repo.RepoFile;
+import com.enss.ipfsgate.model.repo.vo.RepoFileVo;
 import com.enss.ipfsgate.service.ContractService;
 import com.enss.ipfsgate.service.FileService;
 import com.enss.ipfsgate.utils.JsonUtil;
@@ -47,6 +48,16 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<Map<String, Object>> selectAll() {
         return fileMapper.selectAll();
+    }
+
+    @Override
+    public List<RepoFileVo> searchUnauditedFile() {
+        return fileMapper.searchUnauditedFile();
+    }
+
+    @Override
+    public int searchUnauditedFileCount() {
+        return fileMapper.searchUnauditedFileCount();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.enss.ipfsgate.service;
 
 import com.enss.ipfsgate.model.FileInfo;
 import com.enss.ipfsgate.model.repo.RepoFile;
+import com.enss.ipfsgate.model.repo.vo.RepoFileVo;
 import com.enss.ipfsgate.utils.Resp;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,10 @@ public interface FileService {
 
     //查询所有
     List<Map<String,Object>> selectAll();
+
+    //查询所有提交审核但未审核的文件
+    List<RepoFileVo> searchUnauditedFile();
+    int searchUnauditedFileCount();
 
     //新建
     int insert(FileInfo record);

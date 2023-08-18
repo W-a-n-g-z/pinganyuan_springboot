@@ -39,4 +39,6 @@ public interface RepoService {
     public int addBranch(RepoBranch repoBranch);
 
     int addDepo(RepoInfo repoInfo);
+
+    int applyForAudit(int repoId);
 }

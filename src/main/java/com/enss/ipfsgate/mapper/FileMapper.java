@@ -2,6 +2,7 @@ package com.enss.ipfsgate.mapper;
 
 import com.enss.ipfsgate.model.FileInfo;
 import com.enss.ipfsgate.model.repo.RepoFile;
+import com.enss.ipfsgate.model.repo.vo.RepoFileVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,9 @@ public interface FileMapper {
     //查询所有
     List<Map<String,Object>> selectAll();
 
+    //查询所有提交审核但未审核的文件
+    List<RepoFileVo> searchUnauditedFile();
+
     //新建
     int insert(FileInfo record);
 
@@ -36,4 +40,6 @@ public interface FileMapper {
     int updateTempUrl(RepoFile repoFile);
 
     int updateFileInfo(RepoFile repoFile);
+
+    int searchUnauditedFileCount();
 }

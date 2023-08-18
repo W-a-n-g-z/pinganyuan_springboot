@@ -31,6 +31,7 @@
         <result property="chainHash" column="chain_hash" />
         <result property="chainState" column="chain_state" />
         <result property="chainHeight" column="chain_height" />
+        <result property="auditState" column="audit_state" />
         <result property="remark" column="remark" />
     </resultMap>
 
@@ -149,5 +150,9 @@
                 #{repo_label,jdbcType=VARCHAR}, #{repo_language,jdbcType=VARCHAR},#{desc,jdbcType=VARCHAR})
     </insert>
 
+    <update id="applyForAudit" parameterType="java.lang.Integer">
+        UPDATE repo_file SET audit_state = 0
+        WHERE repo_id = #{repoId} and audit_state != 1
+    </update>
 
 </mapper>

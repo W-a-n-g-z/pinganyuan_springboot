@@ -1,7 +1,6 @@
 package com.enss.ipfsgate.utils.network;
 
 import com.alibaba.fastjson.JSON;
-import com.enss.ipfsgate.model.metrics.SendInfoModel;
 import okhttp3.*;
 import okio.BufferedSink;
 import org.jetbrains.annotations.NotNull;
@@ -198,16 +197,6 @@ public class OkHttp {
 //    }
 
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
-    /**
-     * 对外提供的POST方法，同步方式，向中心发送指标专用
-     * @param url
-     * @return
-     */
-    public static Response doPostPublicHeader(String url, List<SendInfoModel> sendInfoList, String token) throws Exception {
-        String json = JSON.toJSONString(sendInfoList);
-        RequestBody requestBody = RequestBody.create(MEDIA_TYPE_JSON, json);;
-        return  mInstance.inner_DoPostPublicHeader(url,requestBody,token);
-    }
 
 
     /**

@@ -2,6 +2,8 @@ package com.enss.ipfsgate.controller;
 
 import com.enss.ipfsgate.model.repo.RepoBranch;
 import com.enss.ipfsgate.model.repo.RepoInfo;
+import com.enss.ipfsgate.model.repo.vo.RepoAuditScore;
+import com.enss.ipfsgate.model.repo.vo.RepoBranchVo;
 import com.enss.ipfsgate.service.IssueService;
 import com.enss.ipfsgate.service.PrService;
 import com.enss.ipfsgate.service.RepoService;
@@ -42,6 +44,45 @@ public class WorkbenchController {
     @RequestMapping("/selectBranchList")
     public Resp selectBranchList(int repoId){
         return Resp.success(repoService.selectBranchList(repoId));
+    }
+
+    //获取仓库的可信评价状况
+    @RequestMapping("/getRepoAuditScore")
+    public Resp getRepoAuditScore(int repoId){
+        List<RepoBranchVo> repoBranchVoList = repoService.selectBranchList(repoId);
+        int defaultNum = 0;     //未申请审核可信，auditState=-1，扣1分
+        int unAuditNum = 0;     //申请未审核，auditState=0，加1分
+        int auditNum = 0;       //可信，auditState=1，加2分
+        int failAuditNum = 0;   //不可信，auditState=2，扣2分
+        if(repoBranchVoList!=null){
+            for (int i=0;i<repoBranchVoList.size();i++)
+            {
+                for (int j=0;j<repoBranchVoList.get(i).getRepoFileList().size();j++)
+                {
+                    int auditState = repoBranchVoList.get(i).getRepoFileList().get(j).getAuditState();
+                    if(-1==auditState){
+                        defaultNum++;
+                    }else if(0==auditState){
+                        unAuditNum++;
+                    }else if(1==auditState){
+                        auditNum++;
+                    }else if(2==auditState){
+                        failAuditNum++;
+                    }
+                }
+            }
+        }else{
+            return Resp.error("未查询到该仓库！");
+        }
+        int score = 60-defaultNum*1+unAuditNum*1+auditNum*2-failAuditNum*2;
+        return Resp.success(new RepoAuditScore(defaultNum,unAuditNum,auditNum,failAuditNum,score));
+    }
+
+    //申请可信依赖库，重新将未审核通过的可信库文件提交申请
+    @RequestMapping("/applyForAudit")
+    public Resp applyForAudit(int repoId,String priKey){
+        repoService.applyForAudit(repoId);
+        return Resp.success("申请成功！");
     }
 
     @RequestMapping("/addBranch")
