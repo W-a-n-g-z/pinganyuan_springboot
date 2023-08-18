@@ -78,6 +78,35 @@ public class RepoController {
         return repoService.selectAll();
     }
 
+    //删除仓库
+    @RequestMapping("/deleteDepo")
+    public Resp deleteDepo(int repoId,String priKey){
+        repoService.deleteDepo(repoId);
+        return Resp.success("删除成功！");
+    }
+
+    //找回仓库
+    @RequestMapping("/getBackDepo")
+    public Resp getBackDepo(String keyword,String priKey){
+        if(keyword.indexOf("/")<=0){
+            return Resp.error("仓库找回失败！请检查仓库名称！");
+        }
+        String[] keywordArray = keyword.split("/");
+        String rUser = keywordArray[0];
+        String rName = keywordArray[1];
+        RepoInfo ri = new RepoInfo();
+        ri.setrUser(rUser);
+        ri.setrName(rName);
+        int retCount = repoService.getBackDepo(ri);
+        if(retCount>=1){
+            return Resp.success("仓库找回成功！");
+        }else{
+            return Resp.error("仓库找回失败！请检查仓库名称！");
+        }
+
+    }
+
+
     //活跃仓库
     @RequestMapping("/activerepo")
     public List<Map<String,Object>> active(){

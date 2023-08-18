@@ -93,4 +93,14 @@ public class RepoServiceImpl implements RepoService {
     public int applyForAudit(int repoId) {
         return repoMapper.applyForAudit(repoId);
     }
+
+    @Override
+    public int deleteDepo(int repoId) {
+        return repoMapper.deleteDepo(repoId);
+    }
+
+    @Override
+    public int getBackDepo(RepoInfo ri) {
+        return repoMapper.getBackDepo(ri);
+    }
 }

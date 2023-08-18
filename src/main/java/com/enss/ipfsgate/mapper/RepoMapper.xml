@@ -60,6 +60,7 @@
                 or repo_label like CONCAT('%',#{keyword},'%')
             </if>
         )
+        and repo_state = 1
         <if test="sort!=null and sort !=''">
             order by ${sort}
         </if>
@@ -76,19 +77,20 @@
                 or repo_label like CONCAT('%',#{keyword},'%')
             </if>
         )
+        and repo_state = 1
         <if test="sort!=null and sort !=''">
             order by ${sort}
         </if>
     </select>
     <!-- 单查 -->
     <select id="searchDetail" parameterType="com.enss.ipfsgate.model.repo.vo.RepoInfoVo" resultMap="repoResultMap">
-        select * from repo where id=#{rId}
+        select * from repo where id=#{rId} and repo_state = 1
     </select>
 
     <!-- 查询所有仓库 -->
     <select id="selectAll" resultMap="repoResultMap">
         select *
-        from repo
+        from repo where repo_state = 1
     </select>
     <!-- 查询活跃仓库 -->
     <select id="activeRepo" resultMap="repoResultMap">
@@ -102,7 +104,7 @@
                      GROUP BY repo_name
                      ORDER BY count DESC LIMIT 2
             ) AS subquery
-        )
+        ) and repo_state = 1
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="rId" parameterType="com.enss.ipfsgate.model.repo.RepoInfo">
         insert into repo (repo_name, user_name, repo_label, repo_language)
@@ -113,7 +115,7 @@
     <select id="onesRepo" parameterType="String" resultMap="repoResultMap">
         SELECT *
         FROM repo
-        WHERE user_name = #{user_name,jdbcType=VARCHAR}
+        WHERE user_name = #{user_name,jdbcType=VARCHAR} and repo_state = 1
     </select>
 
     <!-- 查询某人的参与仓库，有时间可以优化为使用id作为查询条件 -->
@@ -125,7 +127,7 @@
             FROM repo_member
             WHERE member_name= #{member_name,jdbcType=VARCHAR}
             and member_manager = 0
-            )
+            ) and repo_state = 1
     </select>
 
     <!-- 查询某个仓库底下的所有分支及文件列表 -->
@@ -153,6 +155,16 @@
     <update id="applyForAudit" parameterType="java.lang.Integer">
         UPDATE repo_file SET audit_state = 0
         WHERE repo_id = #{repoId} and audit_state != 1
+    </update>
+
+    <update id="deleteDepo" parameterType="java.lang.Integer">
+        UPDATE repo SET repo_state = 0
+        WHERE id=#{repoId}
+    </update>
+
+    <update id="getBackDepo" parameterType="com.enss.ipfsgate.model.repo.RepoInfo">
+        UPDATE repo SET repo_state = 1
+        WHERE user_name=#{rUser} and repo_name = #{rName}
     </update>
 
 </mapper>

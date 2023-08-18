@@ -40,4 +40,8 @@ public interface RepoMapper {
     int addDepo(RepoInfo repoInfo);
 
     int applyForAudit(int repoId);
+
+    int deleteDepo(int repoId);
+
+    int getBackDepo(RepoInfo ri);
 }
